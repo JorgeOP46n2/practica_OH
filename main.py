@@ -1,0 +1,20 @@
+from group02.EA import EA
+import group02.CrossoverOperator
+import numpy
+from benchmarks import functions
+
+
+def f(sol):
+    return sum(sol)
+
+
+mybounds = [(0, 1)] * 10
+
+myEA = EA(functions.sphere, mybounds, 50)
+
+myEA.run(1000)
+
+bestGenome = myEA.best()
+
+if __name__ == "__main__":
+    print(mybounds[0].__getitem__(2))
