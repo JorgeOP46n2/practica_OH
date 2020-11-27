@@ -23,9 +23,12 @@ class EA(object):
 
         # inizialization
         for i in range(number):
-            mini = self.mybounds[0].__getitem__(0)
-            maxi = self.mybounds[0].__getitem__(1)
-            vector = mini + numpy.random.random_sample(len(self.mybounds)) * (maxi - mini)
+
+            vector = numpy.random.random_sample(len(self.mybounds))
+            for j in range(len(vector)):
+                mini = self.mybounds[j].__getitem__(0)
+                maxi = self.mybounds[j].__getitem__(1)
+                vector[j] = mini + vector[j] * (maxi - mini)
             genoma = Genome(vector, self.function)
             conjunto_x.append(genoma)
         # se convierte el conjunto auxiliar en population
@@ -39,10 +42,11 @@ class EA(object):
         i = 0
         while i < iteraciones and self.best.fitness != 0:
             # se ordena la lista de mejor a peor fitness
-            self.generation[i].ordenar_ascendente()
+            listaOrdenada = self.generation[i].ordenar_ascendente()
+
 
             # se guarda el best en el atributo de EA
-            self.best = self.generation[i].lista[0]
+            self.best = listaOrdenada[0]
             print(self.best.vector)
             # crea la population de trials
             trialv_pop = Population()

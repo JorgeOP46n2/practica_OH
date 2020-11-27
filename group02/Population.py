@@ -37,7 +37,7 @@ class Population:
         self.lista = lista
 
     def ordenar_ascendente(self):
-        self.lista = merge_sort(self.lista)
+        return merge_sort(self.lista)
 
     def ordenar_descendente(self):
         self.lista = merge_sort(self.lista)

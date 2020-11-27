@@ -1,6 +1,7 @@
 import random
 import numpy
 
+
 class CrossoverOperator:
     def __init__(self, CR=0.5):
         self.CR = CR
