@@ -1,19 +1,17 @@
 import random
 
+class CrossoverOperator(object):
+    def __init__(self,):
+        self.CR = 0.5
+        self.trialv = []
+    def apply(self, population):
+        Irand=random.randint(0, len(population.list[0].vector)-1)
+        for j in range(len(population.list[0].vector)):
 
-class CrossoverOperator:
-
-
-    @staticmethod
-    def apply(lista):
-        lista = lista
-        CR = 0.6
-        trialv = []
-        i_rand = random.randint(0, len(lista.poblacion[0])-1)
-
-        for j in range(len(lista.poblacion[0])):
-            if j != i_rand and random.random() <= CR:
-                trialv.append(lista.poblacion[0].vector[j])
+            if j!=Irand and random.random() <= self.CR :
+                self.trialv.append(population.list[0].vector[j])
             else:
-                trialv.append(lista.poblacion[1].vector[j])
-        return trialv
+                self.trialv.append(population.list[1].vector[j])
+        return self.trialv
+
+

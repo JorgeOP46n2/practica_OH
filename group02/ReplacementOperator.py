@@ -2,15 +2,13 @@ from group02.Population import Population
 
 
 class ReplacementOperator:
-    @staticmethod
-    def apply(poblacion1, poblacion2):
-        poblacionres = Population()
-        poblacion1.ordenar_ascendente()
-        for i in range(len(poblacion1.poblacion)):
-            if poblacion1.poblacion[i].fitness > poblacion2.poblacion[i].fitness:
-                poblacionres.add(poblacion1.poblacion[i])
-
+    def apply(self, pop1, pop2):
+        replacedPop = Population()
+        pop1.oredenar_ascendente()
+        pop2.ordenar_ascendente()
+        for i in range(len(pop1.list)):
+            if pop1.list[i].fitness <= pop2.list[i].fitness:
+                replacedPop.add(pop1.list[i])
             else:
-                poblacionres.add(poblacion2.poblacion[i])
-
-        return poblacionres
+                replacedPop.add(pop2.list[i])
+        return replacedPop
