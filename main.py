@@ -10,11 +10,12 @@ def f(sol):
 
 mybounds = [(0, 1)] * 10
 
-myEA = EA(functions.sphere, mybounds, 50)
+myEA = EA(functions.rosenbrock, mybounds,50)
 
-myEA.run(1000)
+myEA.run(10000)
 
-bestGenome = myEA.best()
+bestGenome = myEA.best
+print(sum(bestGenome.vector))
 
 """if __name__ == "__main__":
     print(mybounds[0].__getitem__(1))

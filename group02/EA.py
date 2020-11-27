@@ -16,10 +16,10 @@ class EA(object):
         self.function = function
         self.mybounds = mybounds
         self.number = number
-        v_aux = []
         conjunto_x = []
         self.generation = []
         self.best = None
+        self.CR = 0.5
 
         # inizialization
         for i in range(number):
@@ -57,12 +57,12 @@ class EA(object):
 
                 # se le pasa selection a mutation
                 myMutOp = MutationOperator()
-                mutationVector = myMutOp.apply([self.best]+selection[1:3])
+                mutationVector = myMutOp.apply([self.best] + selection[1:3])
                 g_mutation = Genome(mutationVector, self.function)
                 pop_aux = Population([g_mutation, self.generation[i].lista[j]])
 
                 # se crea el trial vector
-                myCrossOp = CrossoverOperator()
+                myCrossOp = CrossoverOperator(self.CR)
                 crossoverVector = myCrossOp.apply(pop_aux)
                 g_crossover = Genome(crossoverVector, self.function)
 
@@ -75,3 +75,6 @@ class EA(object):
 
     def best(self):
         return self.best()
+
+    def setCR(self, valor):
+        self.CR = valor

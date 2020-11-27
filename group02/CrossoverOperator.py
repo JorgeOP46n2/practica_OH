@@ -1,9 +1,9 @@
 import random
 import numpy
 
-class CrossoverOperator(object):
-    def __init__(self, ):
-        self.CR = 0.5
+class CrossoverOperator:
+    def __init__(self, CR=0.5):
+        self.CR = CR
         self.trialv = []
 
     def apply(self, population):

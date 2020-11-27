@@ -2,7 +2,8 @@ from group02.Population import Population
 
 
 class ReplacementOperator:
-    def apply(self, pop1, pop2):
+    @staticmethod
+    def apply(pop1, pop2):
         replacedPop = Population()
         pop1.ordenar_ascendente()
         pop2.ordenar_ascendente()
