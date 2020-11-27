@@ -29,10 +29,9 @@ class EA(object):
             genoma = Genome(vector, self.function)
             conjunto_x.append(genoma)
         # se convierte el conjunto auxiliar en population
-    #hey
         init_Pop = Population(conjunto_x)
         init_Pop.ordenar_ascendente()
-        self.best = init_Pop.list[0]
+        self.best = init_Pop.lista[0]
         # se añade la population a la lista de generaciones
         self.generation.append(init_Pop)
 
@@ -43,13 +42,13 @@ class EA(object):
             self.generation[i].ordenar_ascendente()
 
             # se guarda el best en el atributo de EA
-            self.best = self.generation[i].list[0]
+            self.best = self.generation[i].lista[0]
             print(self.best.vector)
             # crea la population de trials
             trialv_pop = Population()
 
             # por cada vector de la poblacion
-            for j in range(len(self.generation[i].list)):
+            for j in range(len(self.generation[i].lista)):
                 # crea un operador de seleccion al que se le pasa la poblacion actual y el indice del target
                 mySelOp = SelectionOperator()
 
@@ -58,9 +57,9 @@ class EA(object):
 
                 # se le pasa selection a mutation
                 myMutOp = MutationOperator()
-                mutationVector = myMutOp.apply(selection)
+                mutationVector = myMutOp.apply([self.best]+selection[1:3])
                 g_mutation = Genome(mutationVector, self.function)
-                pop_aux = Population([g_mutation, self.generation[i].list[j]])
+                pop_aux = Population([g_mutation, self.generation[i].lista[j]])
 
                 # se crea el trial vector
                 myCrossOp = CrossoverOperator()

@@ -31,24 +31,24 @@ def merge(list1, list2):
 
 
 class Population:
-    def __init__(self, list=None):
-        if list is None:
-            list = []
-        self.list = list
+    def __init__(self, lista=None):
+        if lista is None:
+            lista = []
+        self.lista = lista
 
     def ordenar_ascendente(self):
-        self.list = merge_sort(self.list)
+        self.lista = merge_sort(self.lista)
 
     def ordenar_descendente(self):
-        self.list = merge_sort(self.list)
-        self.list.reverse()
+        self.lista = merge_sort(self.lista)
+        self.lista.reverse()
 
     def add(self, solution):
-        self.list.append(solution)
+        self.lista.append(solution)
 
     def remove(self, solution):
-        return self.list.remove(solution)
+        return self.lista.remove(solution)
 
     def change(self, solution1, solution2):
-        self.list.remove(solution1)
-        return  self.list.append(solution2)
+        self.lista.remove(solution1)
+        return  self.lista.append(solution2)

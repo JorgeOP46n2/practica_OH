@@ -10,13 +10,13 @@ def f(sol):
 
 mybounds = [(0, 1)] * 10
 
-"""myEA = EA(functions.sphere, mybounds, 50)
+myEA = EA(functions.sphere, mybounds, 50)
 
 myEA.run(1000)
 
-bestGenome = myEA.best() """
+bestGenome = myEA.best()
 
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     print(mybounds[0].__getitem__(1))
     print(4+ numpy.random.random_sample(len(mybounds))*(6-4))
-
+"""
