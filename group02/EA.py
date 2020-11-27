@@ -29,7 +29,7 @@ class EA(object):
             genoma = Genome(vector, self.function)
             conjunto_x.append(genoma)
         # se convierte el conjunto auxiliar en population
-
+    #hey
         init_Pop = Population(conjunto_x)
         init_Pop.ordenar_ascendente()
         self.best = init_Pop.list[0]
