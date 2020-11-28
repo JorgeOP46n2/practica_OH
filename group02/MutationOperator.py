@@ -6,9 +6,9 @@ class MutationOperator:
 
     @staticmethod
     def apply(lista):
-        target = lista[0].vector
+        best = numpy.array(lista[0].vector)
         x1 = numpy.array(lista[1].vector)
         x2 = numpy.array(lista[2].vector)
 
-
-        return target + random.random() * (x1 - x2)
+        #devuelve un vector mutado aplicando de/best/1
+        return best + (random.random()*2) * (x1 - x2)
