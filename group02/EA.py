@@ -20,15 +20,13 @@ class EA(object):
         self.generation = []
         self.best = None
         self.CR = 0.5
+        self.F=1
 
-        # inizialization
+        # INITIALIZATION
         for i in range(number):
-
-            vector = numpy.random.random_sample(len(self.mybounds))
-            for j in range(len(vector)):
-                mini = self.mybounds[j].__getitem__(0)
-                maxi = self.mybounds[j].__getitem__(1)
-                vector[j] = mini + vector[j] * (maxi - mini)
+            mini = self.mybounds[0].__getitem__(0)
+            maxi = self.mybounds[0].__getitem__(1)
+            vector = mini + numpy.random.random_sample(len(self.mybounds)) * (maxi - mini)
             genoma = Genome(vector, self.function)
             conjunto_x.append(genoma)
         # se convierte el conjunto auxiliar en population
@@ -39,46 +37,63 @@ class EA(object):
         self.generation.append(init_Pop)
 
     def run(self, iteraciones):
+        #contador de iteraciones
         i = 0
         while i < iteraciones and self.best.fitness != 0:
             # se ordena la lista de mejor a peor fitness
-            listaOrdenada = self.generation[i].ordenar_ascendente()
-
-
             # se guarda el best en el atributo de EA
-            self.best = listaOrdenada[0]
-            print(self.best.vector)
+            self.best = self.generation[i].ordenar_ascendente()[0]
+            # print(Population(self.generation[i].ordenar_ascendente()).fitlist())
             # crea la population de trials
             trialv_pop = Population()
 
             # por cada vector de la poblacion
             for j in range(len(self.generation[i].lista)):
-                # crea un operador de seleccion al que se le pasa la poblacion actual y el indice del target
+            #SELECTION
                 mySelOp = SelectionOperator()
 
-                # apply devuelve una lista con el target y dos aleatorios
+                # apply devuelve una lista con el target y dos aleatorios a partir de la poblacion actual y el indice del target
                 selection = mySelOp.apply(self.generation[i], j)
 
-                # se le pasa selection a mutation
+            #MUTATION
                 myMutOp = MutationOperator()
-                mutationVector = myMutOp.apply([self.best] + selection[1:3])
+
+                # apply crea el vector de mutación aplicando de/best/1 a partir del best y dos donors (best + los 2 donors de selection)
+                mutationVector = myMutOp.apply([self.best] + selection.lista[1:3],self.F)
                 g_mutation = Genome(mutationVector, self.function)
+
+                #  se crea una poblacion auxiliar con el genoma mutado y el genoma del target
                 pop_aux = Population([g_mutation, self.generation[i].lista[j]])
 
-                # se crea el trial vector
+            #CROSSOVER
                 myCrossOp = CrossoverOperator(self.CR)
+
+                # apply crea el trial vector aplicando binomial con probabilidad CR a partir del vector mutado y el target (pop_aux)
                 crossoverVector = myCrossOp.apply(pop_aux)
                 g_crossover = Genome(crossoverVector, self.function)
 
+                # se añade el trial a una poblacion auxiliar
                 trialv_pop.add(g_crossover)
-            # replacement
+
+        #REPLACEMENT
             myRepOp = ReplacementOperator()
+
+            # apply devuelve una poblacion con los vectores reemplazados por su trial vector en el caso de que el trial vector tuviese mejor fitness que el target
             newPop = myRepOp.apply(trialv_pop, self.generation[i])
+
+            #se añade la nueva población a la lista de generaciones
             self.generation.append(newPop)
+
+            #se incrementa el contador de iteraciones
             i = i + 1
 
+    #metodo que devuelve el mejor genoma
     def best(self):
         return self.best()
 
+    #metodo que pasa un valor de CR para el crossover binomial (opcional)
     def setCR(self, valor):
         self.CR = valor
+
+    def setF(self,valor):
+        self.F=valor

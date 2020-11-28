@@ -40,8 +40,9 @@ class Population:
         return merge_sort(self.lista)
 
     def ordenar_descendente(self):
-        self.lista = merge_sort(self.lista)
-        self.lista.reverse()
+        aux = merge_sort(self.lista)
+        aux.reverse()
+        return aux
 
     def add(self, solution):
         self.lista.append(solution)
@@ -52,3 +53,8 @@ class Population:
     def change(self, solution1, solution2):
         self.lista.remove(solution1)
         return  self.lista.append(solution2)
+    def fitlist(self):
+        lista=[]
+        for i in self.lista:
+            lista.append(i.fitness)
+        return lista
