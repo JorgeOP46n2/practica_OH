@@ -4,45 +4,44 @@ import numpy
 def descifrado(vector, args, final=False):
     for i in vector:
         i = int(i)
-    desc = Descifrar()
-    fitness = desc.f(vector, args[0], args[1])
+    desc = args[0]
+    fitness = desc.f(vector, )
     if final:
         print(desc.origtext)
     return fitness
 
 
 class Descifrar:
-    def __init__(self):
+    def __init__(self, texto, palabras):
+        self.texto = texto
         self.origtext = ""
+        self.palabras = palabras
 
-    def generateKey(self, string, key):
+    def generateKey(self, key):
         # comprueba que la clave sea del tamaño del texto
-        if len(string) <= len(key):
+        if len(self.texto) <= len(key):
             return key
         # si no lo es, repite la clave hasta que lo sea
         else:
-            for i in range(len(string) - len(key)):
+            for i in range(len(self.texto) - len(key)):
                 key = numpy.append(key, key[i % len(key)])
         return key
 
-    def decipher(self, key, texto):
+    def decipher(self, key):
         orig_text = []
-        for i in range(len(texto)):
-            x = (ord(texto[i]) - (key[i] + 65) + 26) % 26
+        for i in range(len(self.texto)):
+            x = (ord(self.texto[i]) - (key[i] + 65) + 26) % 26
             x += ord('A')
-            orig_text
-
             orig_text.append(chr(int(x)))
         return "".join(orig_text)
 
-    def f(self, vector, texto, palabras):
-        key = self.generateKey(texto, vector)
-        orig_text = self.decipher(key, texto)
+    def f(self, vector):
+        key = self.generateKey(vector)
+        orig_text = self.decipher(key)
         self.origtext = orig_text
         fitness = 1
-        coincidencias = 0
 
-        for i in palabras:
+        for i in self.palabras:
             coincidencias = 1
             for k in range(len(orig_text)):
                 aux = 0

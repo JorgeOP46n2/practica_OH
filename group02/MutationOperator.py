@@ -11,5 +11,5 @@ class MutationOperator:
         x2 = numpy.array(lista[2].vector)
         f = F
 
-        # devuelve un vector mutado aplicando de/best/1
+        # devuelve un vector mutado aplicando de/rand/exp
         return abs(best + f * (x1 - x2)) % 26
