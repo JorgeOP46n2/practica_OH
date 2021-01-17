@@ -40,10 +40,22 @@ class Descifrar:
         orig_text = self.decipher(key, texto)
         self.origtext = orig_text
         fitness = 1
-        aux2 = 1
+        coincidencias = 0
+
         for i in palabras:
+            coincidencias = 1
             for k in range(len(orig_text)):
-                aux = aux2
+                aux = 0
+                if len(i) <= len(orig_text) - k:
+                    for j in range(len(i)):
+
+                        if i[j] == orig_text[k + j]:
+                            aux += 1
+                    if aux > coincidencias:
+                        coincidencias = aux
+            fitness *= pow(coincidencias, 2)
+
+            """aux =0
                 for j in range(len(i)):
                     if i[j] == orig_text[k]:
                         fitness = fitness + aux
@@ -56,6 +68,6 @@ class Descifrar:
                         else:
                             break
                     else:
-                        aux =aux2
+                        aux = aux2"""
 
         return 1 / fitness
